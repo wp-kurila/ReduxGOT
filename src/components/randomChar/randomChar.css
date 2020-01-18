@@ -1,7 +1,8 @@
 .random-block {
     background-color: #fff;
-    padding: 25px 25px 15px 25px;
+    padding: 25px 25px 0px 25px;
     margin-bottom: 40px;
+    min-height: 275px;
 }
 .random-block h4 {
     margin-bottom: 20px;

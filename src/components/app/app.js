@@ -4,9 +4,18 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ItemList from '../itemList';
 import CharDetails from '../charDetails';
+import {connect} from 'react-redux';
+import {toggleBtn} from '../../actions';
 
 
-const App = () => {
+import './app.css';
+
+
+const App = ({visible,toggleBtn}) => {
+
+    const randomChar = visible ? <RandomChar /> : null
+    const content = visible ? `Скрыть персонажа` : `Отобразить персонажа`
+
     return (
         <> 
             <Container>
@@ -15,7 +24,13 @@ const App = () => {
             <Container>
                 <Row>
                     <Col lg={{size: 5, offset: 0}}>
-                        <RandomChar/>
+                        {randomChar}
+                        
+                        <button 
+                            className='toggleBtn btn btn-primary'
+                            onClick={() => toggleBtn()}>
+                                {content}    
+                        </button>
                     </Col>
                 </Row>
                 <Row>
@@ -31,4 +46,14 @@ const App = () => {
     );
 };
 
-export default App;
+const mapStateToProps = ({visible}) => {
+    return {
+        visible
+    }
+}
+
+const mapDispatchToProps = {
+    toggleBtn
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
