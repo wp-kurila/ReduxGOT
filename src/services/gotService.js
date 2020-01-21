@@ -12,8 +12,8 @@ export default class GotService {
         return await res.json();
     }
 
-    async getAllCharacters() {
-        const res = await this.getResource(`/characters/`);
+    async getAllCharacters(page) {
+        const res = await this.getResource(`/characters?page=${page}`);
         return res.map(this._transformCharacter);
     }
 
@@ -46,13 +46,20 @@ export default class GotService {
         }
     }
 
-    _transformCharacter(char) {
+    getId(item) {
+        const idRegExp = /\/([0-9]*)$/;
+        return item.url.match(idRegExp)[1];
+        
+    }
+
+    _transformCharacter = (char) => {
         return {
             name: this.checkContent(char.name),
             gender: this.checkContent(char.gender),
             born: this.checkContent(char.born),
             died: this.checkContent(char.died),
-            culture: this.checkContent(char.culture)
+            culture: this.checkContent(char.culture),
+            id: this.getId(char)
         }
     }
 

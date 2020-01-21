@@ -1,39 +1,48 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import WithGotService from '../hoc';
-import {charLoaded, charRequested, charError} from '../../actions';
+import {charLoaded, charRequested, charErrored} from '../../actions';
 import Spinner from '../spinner';
 import Error from '../error';
 
 import './randomChar.css';
 
 class RandomChar extends Component {
+    
     componentDidMount() {
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 4000);
+    }
 
-        const {GotService} = this.props;
+    componentWillUnmount() {
+        clearInterval(this.timerId);
+    }
+
+    updateChar = () => {
+        const {GotService, charLoaded, charErrored} = this.props;
 
         const id = Math.round(Math.random() * 140 + 25);
         GotService.getCharacter(id)
-            .then(res => this.props.charLoaded(res))
-            .catch(this.props.charError)
+            .then(res => charLoaded(res))
+            .catch(charErrored);
     }
 
     render() {
-        const {char, spinner, error} = this.props;
+        const {char, loading, error} = this.props;
 
-        const loading = spinner ? <Spinner /> : null;
+        const spinner = loading ? <Spinner /> : null;
         const errorMessage = error ? <Error /> : null;
-        const content = !(spinner || error) ? <View char={char} /> : null;
+        const content = !(loading || error) ? <View char={char} /> : null;
 
         return (
             <div className="random-block rounded">
                 {errorMessage}
-                {loading}
+                {spinner}
                 {content}
             </div>
         );
     }
-};
+}
 
 const View = ({char}) => {
     const {name, gender, born, died, culture} = char;
@@ -62,10 +71,10 @@ const View = ({char}) => {
     )
 }
 
-const mapStateToProps = ({char, spinner, error}) => {
+const mapStateToProps = ({char, loading, error}) => {
     return {
         char,
-        spinner,
+        loading,
         error
     }
 }
@@ -73,7 +82,7 @@ const mapStateToProps = ({char, spinner, error}) => {
 const mapDispatchToProps = {
     charLoaded,
     charRequested,
-    charError
+    charErrored
 }
 
 export default WithGotService()(connect(mapStateToProps, mapDispatchToProps)(RandomChar));

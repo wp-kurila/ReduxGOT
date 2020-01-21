@@ -11,7 +11,7 @@ const charRequested = () => {
     };
 };
 
-const charError = () => {
+const charErrored = () => {
     return {
         type: 'CHAR_ERROR',
     };
@@ -23,9 +23,34 @@ const toggleBtn = () => {
     };
 };
 
+const charListLoaded = (charList) => {
+    return {
+        type: 'CHARLIST_LOADED',
+        payload: charList
+    };
+};
+
+const onCharDetails = (id) => {
+    return {
+        type: 'ON_CHAR_DETAILS',
+        payload: id
+    }
+}
+
+const charDetails = (item) => {
+    return {
+        type: 'CHAR_DETAILS',
+        payload: item
+    }
+}
+
+
 export {
     charLoaded,
     charRequested,
-    charError,
-    toggleBtn
+    charErrored,
+    toggleBtn,
+    charListLoaded,
+    onCharDetails,
+    charDetails,
 }

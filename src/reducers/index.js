@@ -1,8 +1,13 @@
 const initialState = {
     char: {},
-    spinner: true,
+    loading: true,
     error: false,
-    visible: true
+    charVisible: true,
+    charList: null,
+    charId: null,
+    itemDetails: null,
+    itemDetailsVisible: false,
+    itemLoading: true
 }
 
 const reducer = (state = initialState, action) => {
@@ -11,23 +16,53 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 char: action.payload,
-                spinner: false
+                loading: false
             };
         case 'CHAR_REQUESTED':
             return {
                 ...state,
-                spinner: true
+                loading: true
             };
         case 'CHAR_ERROR':
             return {
                 ...state,
                 error: true,
-                spinner: false
+                loading: false
             };
         case 'TOGGLE_BTN':
             return {
                 ...state,
-                visible: !state.visible 
+                charVisible: !state.charVisible 
+            };
+        case 'CHARLIST_LOADED':
+            return {
+                ...state,
+                charList: action.payload,
+                loading: true
+            };
+        case 'CHARLIST_REQUESTED':
+            return {
+                ...state,
+                loading: true
+            };
+        case 'CHARLIST_ERROR':
+            return {
+                ...state,
+                loading: false,
+                error: true
+            };
+        case 'ON_CHAR_DETAILS':
+            return {
+                ...state,
+                charId: action.payload,
+                itemLoading: true,
+                itemDetailsVisible: true
+            };
+        case 'CHAR_DETAILS':
+            return {
+                ...state,
+                itemDetails: action.payload,
+                itemLoading: false
             };
         default:
             return state;

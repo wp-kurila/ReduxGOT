@@ -11,10 +11,10 @@ import {toggleBtn} from '../../actions';
 import './app.css';
 
 
-const App = ({visible,toggleBtn}) => {
+const App = ({charVisible, toggleBtn}) => {
 
-    const randomChar = visible ? <RandomChar /> : null
-    const content = visible ? `Скрыть персонажа` : `Отобразить персонажа`
+    const randomChar = charVisible ? <RandomChar /> : null
+    const content = charVisible ? `Скрыть персонажа` : `Отобразить персонажа`
 
     return (
         <> 
@@ -24,8 +24,7 @@ const App = ({visible,toggleBtn}) => {
             <Container>
                 <Row>
                     <Col lg={{size: 5, offset: 0}}>
-                        {randomChar}
-                        
+                        {randomChar}                        
                         <button 
                             className='toggleBtn btn btn-primary'
                             onClick={() => toggleBtn()}>
@@ -46,9 +45,9 @@ const App = ({visible,toggleBtn}) => {
     );
 };
 
-const mapStateToProps = ({visible}) => {
+const mapStateToProps = ({charVisible}) => {
     return {
-        visible
+        charVisible
     }
 }
 
