@@ -2,10 +2,9 @@ import React from 'react';
 import {Col, Row, Container} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
 import {connect} from 'react-redux';
 import {toggleBtn} from '../../actions';
+import {CharacterPage, HousePage, BookPage} from '../pages';
 
 
 import './app.css';
@@ -32,14 +31,9 @@ const App = ({charVisible, toggleBtn}) => {
                         </button>
                     </Col>
                 </Row>
-                <Row>
-                    <Col md='6'>
-                        <ItemList />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails />
-                    </Col>
-                </Row>
+                <CharacterPage />
+                <HousePage />
+                <BookPage />
             </Container>
         </>
     );

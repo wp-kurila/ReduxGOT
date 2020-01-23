@@ -3,8 +3,8 @@ const initialState = {
     loading: true,
     error: false,
     charVisible: true,
-    charList: null,
-    charId: null,
+    itemList: null,
+    itemId: null,
     itemDetails: null,
     itemDetailsVisible: false,
     itemLoading: true
@@ -34,31 +34,20 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 charVisible: !state.charVisible 
             };
-        case 'CHARLIST_LOADED':
+        case 'ITEMLIST_LOADED':
             return {
                 ...state,
-                charList: action.payload,
+                itemList: action.payload,
                 loading: true
             };
-        case 'CHARLIST_REQUESTED':
+        case 'ON_ITEM_DETAILS':
             return {
                 ...state,
-                loading: true
-            };
-        case 'CHARLIST_ERROR':
-            return {
-                ...state,
-                loading: false,
-                error: true
-            };
-        case 'ON_CHAR_DETAILS':
-            return {
-                ...state,
-                charId: action.payload,
+                itemId: action.payload,
                 itemLoading: true,
                 itemDetailsVisible: true
             };
-        case 'CHAR_DETAILS':
+        case 'ITEM_DETAILS_LOADED':
             return {
                 ...state,
                 itemDetails: action.payload,

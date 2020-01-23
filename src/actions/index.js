@@ -23,23 +23,23 @@ const toggleBtn = () => {
     };
 };
 
-const charListLoaded = (charList) => {
+const itemListLoaded = (itemList) => {
     return {
-        type: 'CHARLIST_LOADED',
-        payload: charList
+        type: 'ITEMLIST_LOADED',
+        payload: itemList
     };
 };
 
-const onCharDetails = (id) => {
+const onItemDetails = (id) => {
     return {
-        type: 'ON_CHAR_DETAILS',
+        type: 'ON_ITEM_DETAILS',
         payload: id
     }
 }
 
-const charDetails = (item) => {
+const itemDetailsLoaded = (item) => {
     return {
-        type: 'CHAR_DETAILS',
+        type: 'ITEM_DETAILS_LOADED',
         payload: item
     }
 }
@@ -50,7 +50,7 @@ export {
     charRequested,
     charErrored,
     toggleBtn,
-    charListLoaded,
-    onCharDetails,
-    charDetails,
+    itemListLoaded,
+    onItemDetails,
+    itemDetailsLoaded,
 }
