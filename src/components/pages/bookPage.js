@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bookListLoaded, onBookDetails, bookDetailsLoaded} from '../../actions';
 import ItemList from '../itemList';
 import ItemDetails, {Field} from '../itemDetails';
 import WithGotService from '../hoc';
@@ -12,20 +14,28 @@ class BookPage extends Component {
 
     render() {
 
-        const {GotService} = this.props
+        const {GotService, bookListLoaded, bookList, bookId, onBookDetails, bookDetailsLoaded, bookDetails, bookDetailsVisible, charLoading} = this.props
 
         const page = Math.round(Math.random() * 2);
 
 
         const itemList = (
-            <ItemList 
+            <ItemList
+                onItemDetails={onBookDetails}
+                itemListLoaded={bookListLoaded}
+                itemList={bookList} 
                 getData={GotService.getAllBooks}
                 page={page}
                 renderItem={({name, numberOfPages}) => `${name} (${numberOfPages})`}/>
         )
 
-        const itemDetails = (
+        const itemDetailss = (
             <ItemDetails
+                itemLoading={charLoading}
+                itemDetailsVisible={bookDetailsVisible}
+                itemDetails={bookDetails}
+                itemDetailsLoaded={bookDetailsLoaded}
+                itemId={bookId}
                 message={`Нужно выбрать книгу`}
                 getData={GotService.getBook}>
                 <Field field='numberOfPages' label='Number of pages' />
@@ -35,9 +45,25 @@ class BookPage extends Component {
         )
 
         return (
-            <RowBlock left={itemList} right={itemDetails} />
+            <RowBlock left={itemList} right={itemDetailss} />
         )
     }
 }
 
-export default WithGotService()(BookPage);
+const mapStateToProps = ({bookList, bookId, bookDetails, bookDetailsVisible, charLoading}) => {
+    return {
+        bookList,
+        bookId,
+        bookDetails,
+        bookDetailsVisible,
+        charLoading
+    }
+}
+
+const mapDispatchToProps = {
+    bookListLoaded,
+    onBookDetails,
+    bookDetailsLoaded
+}
+
+export default WithGotService()(connect(mapStateToProps, mapDispatchToProps)(BookPage));

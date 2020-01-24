@@ -23,23 +23,65 @@ const toggleBtn = () => {
     };
 };
 
-const itemListLoaded = (itemList) => {
+const charListLoaded = (itemList) => {
     return {
-        type: 'ITEMLIST_LOADED',
+        type: 'CHARLIST_LOADED',
         payload: itemList
     };
 };
 
-const onItemDetails = (id) => {
+const bookListLoaded = (itemList) => {
     return {
-        type: 'ON_ITEM_DETAILS',
+        type: 'BOOKLIST_LOADED',
+        payload: itemList
+    };
+};
+
+const houseListLoaded = (itemList) => {
+    return {
+        type: 'HOUSELIST_LOADED',
+        payload: itemList
+    };
+};
+
+const onCharDetails = (id) => {
+    return {
+        type: 'ON_CHAR_DETAILS',
         payload: id
     }
 }
 
-const itemDetailsLoaded = (item) => {
+const onBookDetails = (id) => {
     return {
-        type: 'ITEM_DETAILS_LOADED',
+        type: 'ON_BOOK_DETAILS',
+        payload: id
+    }
+}
+
+const onHouseDetails = (id) => {
+    return {
+        type: 'ON_HOUSE_DETAILS',
+        payload: id
+    }
+}
+
+const charDetailsLoaded = (item) => {
+    return {
+        type: 'CHAR_DETAILS_LOADED',
+        payload: item
+    }
+}
+
+const bookDetailsLoaded = (item) => {
+    return {
+        type: 'BOOK_DETAILS_LOADED',
+        payload: item
+    }
+}
+
+const houseDetailsLoaded = (item) => {
+    return {
+        type: 'HOUSE_DETAILS_LOADED',
         payload: item
     }
 }
@@ -50,7 +92,13 @@ export {
     charRequested,
     charErrored,
     toggleBtn,
-    itemListLoaded,
-    onItemDetails,
-    itemDetailsLoaded,
+    charListLoaded,
+    bookListLoaded,
+    houseListLoaded,
+    onCharDetails,
+    onBookDetails,
+    onHouseDetails,
+    charDetailsLoaded,
+    bookDetailsLoaded,
+    houseDetailsLoaded
 }

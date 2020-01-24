@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {itemListLoaded, onItemDetails} from '../../actions';
 import Spinner from '../spinner';
 
 import './itemList.css';
 class ItemList extends Component {
 
     componentDidMount() {
-        const {getData, itemListLoaded, page} = this.props;
+        const {getData, page, itemListLoaded} = this.props;
 
         getData(page)
             .then(res => itemListLoaded(res))
@@ -48,15 +46,4 @@ class ItemList extends Component {
     }
 }
 
-const mapStateToProps = ({itemList}) => {
-    return {
-        itemList
-    }
-}
-
-const mapDispatchToProps = {
-    itemListLoaded,
-    onItemDetails
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
+export default ItemList;

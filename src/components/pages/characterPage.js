@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {charListLoaded, onCharDetails, charDetailsLoaded} from '../../actions';
 import ItemList from '../itemList';
 import ItemDetails, {Field} from '../itemDetails';
 import WithGotService from '../hoc';
@@ -12,19 +14,26 @@ class CharacterPage extends Component {
 
     render() {
 
-        const {GotService} = this.props
-
+        const {GotService, charListLoaded, charList, charId, onCharDetails, charDetailsLoaded, charDetails, charDetailsVisible, charLoading} = this.props
         const page = Math.round(Math.random() * 210);
 
         const itemList = (
-            <ItemList 
+            <ItemList
+                onItemDetails={onCharDetails}
+                itemListLoaded={charListLoaded}
+                itemList={charList}
                 getData={GotService.getAllCharacters}
                 page={page}
                 renderItem={({name, gender}) => `${name} (${gender})`}/>
         )
 
-        const itemDetails = (
+        const itemDetailss = (
             <ItemDetails
+                itemLoading={charLoading}
+                itemDetailsVisible={charDetailsVisible}
+                itemDetails={charDetails}
+                itemDetailsLoaded={charDetailsLoaded}
+                itemId={charId}
                 message={`Нужно выбрать персонажа`}
                 getData={GotService.getCharacter}>
                 <Field field='gender' label='Gender' />
@@ -35,9 +44,25 @@ class CharacterPage extends Component {
         )
 
         return (
-            <RowBlock left={itemList} right={itemDetails} />
+            <RowBlock left={itemList} right={itemDetailss} />
         )
     }
 }
 
-export default WithGotService()(CharacterPage);
+const mapStateToProps = ({charList, charId, charDetails, charDetailsVisible, charLoading}) => {
+    return {
+        charList,
+        charId,
+        charDetails,
+        charDetailsVisible,
+        charLoading
+    }
+}
+
+const mapDispatchToProps = {
+    charListLoaded,
+    onCharDetails,
+    charDetailsLoaded
+}
+
+export default WithGotService()(connect(mapStateToProps, mapDispatchToProps)(CharacterPage));

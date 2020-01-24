@@ -3,11 +3,21 @@ const initialState = {
     loading: true,
     error: false,
     charVisible: true,
-    itemList: null,
-    itemId: null,
-    itemDetails: null,
-    itemDetailsVisible: false,
-    itemLoading: true
+    charList: null,
+    bookList: null,
+    houseList: null,
+    charId: null,
+    bookId: null,
+    houseId: null,
+    charDetails: null,
+    charDetailsVisible: false,
+    charLoading: true,
+    bookDetails: null,
+    bookDetailsVisible: false,
+    bookLoading: true,
+    houseDetails: null,
+    houseDetailsVisible: false,
+    houseLoading: true
 }
 
 const reducer = (state = initialState, action) => {
@@ -34,24 +44,62 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 charVisible: !state.charVisible 
             };
-        case 'ITEMLIST_LOADED':
+        case 'CHARLIST_LOADED':
             return {
                 ...state,
-                itemList: action.payload,
+                charList: action.payload,
                 loading: true
             };
-        case 'ON_ITEM_DETAILS':
+        case 'BOOKLIST_LOADED':
             return {
                 ...state,
-                itemId: action.payload,
-                itemLoading: true,
-                itemDetailsVisible: true
+                bookList: action.payload,
+                loading: true
             };
-        case 'ITEM_DETAILS_LOADED':
+        case 'HOUSELIST_LOADED':
             return {
                 ...state,
-                itemDetails: action.payload,
-                itemLoading: false
+                houseList: action.payload,
+                loading: true
+            };
+        case 'ON_CHAR_DETAILS':
+            return {
+                ...state,
+                charId: action.payload,
+                charLoading: true,
+                charDetailsVisible: true
+            };
+        case 'ON_BOOK_DETAILS':
+            return {
+                ...state,
+                bookId: action.payload,
+                bookLoading: true,
+                bookDetailsVisible: true
+            };
+        case 'ON_HOUSE_DETAILS':
+            return {
+                ...state,
+                houseId: action.payload,
+                houseLoading: true,
+                houseDetailsVisible: true
+            };
+        case 'CHAR_DETAILS_LOADED':
+            return {
+                ...state,
+                charDetails: action.payload,
+                charLoading: false
+            };
+        case 'BOOK_DETAILS_LOADED':
+            return {
+                ...state,
+                bookDetails: action.payload,
+                bookLoading: false
+            };
+        case 'HOUSE_DETAILS_LOADED':
+            return {
+                ...state,
+                houseDetails: action.payload,
+                houseLoading: false
             };
         default:
             return state;

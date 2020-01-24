@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {itemDetailsLoaded} from '../../actions';
 import Spinner from '../spinner';
 
 import './itemDetails.css';
@@ -81,17 +79,4 @@ class ItemDetails extends Component {
     }
 }
 
-const mapStateToProps = ({itemId, itemDetails, itemLoading, itemDetailsVisible}) => {
-    return {
-        itemId,
-        itemDetails,
-        itemLoading,
-        itemDetailsVisible,
-    }
-}
-
-const mapDispatchToProps = {
-    itemDetailsLoaded
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ItemDetails);
+export default ItemDetails;
