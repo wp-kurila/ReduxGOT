@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {charListLoaded, onCharDetails, charDetailsLoaded} from '../../actions';
+import {charListLoaded, onCharDetails, charDetailsLoaded, charListErrored} from '../../actions';
 import ItemList from '../itemList';
 import ItemDetails, {Field} from '../itemDetails';
 import WithGotService from '../hoc';
@@ -8,17 +8,14 @@ import RowBlock from '../rowBlock';
 
 class CharacterPage extends Component {
 
-    componentDidCatch() {
-
-    }
-
     render() {
 
-        const {GotService, charListLoaded, charList, charId, onCharDetails, charDetailsLoaded, charDetails, charDetailsVisible, charLoading} = this.props
+        const {GotService, charListLoaded, charList, charId, onCharDetails, charDetailsLoaded, charDetails, charDetailsVisible, charLoading, charListErrored, charListError} = this.props
         const page = Math.round(Math.random() * 210);
 
         const itemList = (
             <ItemList
+                itemListErrored={charListErrored}
                 onItemDetails={onCharDetails}
                 itemListLoaded={charListLoaded}
                 itemList={charList}
@@ -44,25 +41,30 @@ class CharacterPage extends Component {
         )
 
         return (
-            <RowBlock left={itemList} right={itemDetailss} />
+            <RowBlock 
+                left={itemList} 
+                right={itemDetailss} 
+                itemListError={charListError} />
         )
     }
 }
 
-const mapStateToProps = ({charList, charId, charDetails, charDetailsVisible, charLoading}) => {
+const mapStateToProps = ({charList, charId, charDetails, charDetailsVisible, charLoading, charListError}) => {
     return {
         charList,
         charId,
         charDetails,
         charDetailsVisible,
-        charLoading
+        charLoading,
+        charListError
     }
 }
 
 const mapDispatchToProps = {
     charListLoaded,
     onCharDetails,
-    charDetailsLoaded
+    charDetailsLoaded,
+    charListErrored
 }
 
 export default WithGotService()(connect(mapStateToProps, mapDispatchToProps)(CharacterPage));

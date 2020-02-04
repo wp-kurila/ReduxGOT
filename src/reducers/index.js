@@ -4,8 +4,11 @@ const initialState = {
     error: false,
     charVisible: true,
     charList: null,
+    charListError: false,
     bookList: null,
+    bookListError: false,
     houseList: null,
+    houseListError: false,
     charId: null,
     bookId: null,
     houseId: null,
@@ -50,17 +53,32 @@ const reducer = (state = initialState, action) => {
                 charList: action.payload,
                 loading: true
             };
+        case 'CHARLIST_ERROR':
+            return {
+                ...state,
+                charListError: true
+            };
         case 'BOOKLIST_LOADED':
             return {
                 ...state,
                 bookList: action.payload,
                 loading: true
             };
+        case 'BOOKLIST_ERROR':
+            return {
+                ...state,
+                bookListError: true
+            };
         case 'HOUSELIST_LOADED':
             return {
                 ...state,
                 houseList: action.payload,
                 loading: true
+            };
+        case 'HOUSELIST_ERROR':
+            return {
+                ...state,
+                houseListError: true
             };
         case 'ON_CHAR_DETAILS':
             return {

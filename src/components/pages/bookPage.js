@@ -1,26 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bookListLoaded, onBookDetails, bookDetailsLoaded} from '../../actions';
+import {bookListLoaded, onBookDetails, bookDetailsLoaded, bookListErrored} from '../../actions';
 import ItemList from '../itemList';
 import ItemDetails, {Field} from '../itemDetails';
 import WithGotService from '../hoc';
 import RowBlock from '../rowBlock';
 
 class BookPage extends Component {
-
-    componentDidCatch() {
-
-    }
-
+    
     render() {
 
-        const {GotService, bookListLoaded, bookList, bookId, onBookDetails, bookDetailsLoaded, bookDetails, bookDetailsVisible, charLoading} = this.props
+        const {GotService, bookListLoaded, bookList, bookId, onBookDetails, bookDetailsLoaded, bookDetails, bookDetailsVisible, bookLoading, bookListError, bookListErrored} = this.props
 
         const page = Math.round(Math.random() * 2);
 
 
         const itemList = (
             <ItemList
+                itemListErrored={bookListErrored}
                 onItemDetails={onBookDetails}
                 itemListLoaded={bookListLoaded}
                 itemList={bookList} 
@@ -31,7 +28,7 @@ class BookPage extends Component {
 
         const itemDetailss = (
             <ItemDetails
-                itemLoading={charLoading}
+                itemLoading={bookLoading}
                 itemDetailsVisible={bookDetailsVisible}
                 itemDetails={bookDetails}
                 itemDetailsLoaded={bookDetailsLoaded}
@@ -45,25 +42,30 @@ class BookPage extends Component {
         )
 
         return (
-            <RowBlock left={itemList} right={itemDetailss} />
+            <RowBlock 
+                left={itemList} 
+                right={itemDetailss} 
+                itemListError={bookListError} />
         )
     }
 }
 
-const mapStateToProps = ({bookList, bookId, bookDetails, bookDetailsVisible, charLoading}) => {
+const mapStateToProps = ({bookList, bookId, bookDetails, bookDetailsVisible, bookLoading, bookListError}) => {
     return {
         bookList,
         bookId,
         bookDetails,
         bookDetailsVisible,
-        charLoading
+        bookLoading,
+        bookListError
     }
 }
 
 const mapDispatchToProps = {
     bookListLoaded,
     onBookDetails,
-    bookDetailsLoaded
+    bookDetailsLoaded,
+    bookListErrored
 }
 
 export default WithGotService()(connect(mapStateToProps, mapDispatchToProps)(BookPage));

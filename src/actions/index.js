@@ -30,6 +30,12 @@ const charListLoaded = (itemList) => {
     };
 };
 
+const charListErrored = () => {
+    return {
+        type: 'CHARLIST_ERROR',
+    };
+};
+
 const bookListLoaded = (itemList) => {
     return {
         type: 'BOOKLIST_LOADED',
@@ -37,10 +43,22 @@ const bookListLoaded = (itemList) => {
     };
 };
 
+const bookListErrored = () => {
+    return {
+        type: 'BOOKLIST_ERROR',
+    };
+};
+
 const houseListLoaded = (itemList) => {
     return {
         type: 'HOUSELIST_LOADED',
         payload: itemList
+    };
+};
+
+const houseListErrored = () => {
+    return {
+        type: 'HOUSELIST_ERROR',
     };
 };
 
@@ -100,5 +118,8 @@ export {
     onHouseDetails,
     charDetailsLoaded,
     bookDetailsLoaded,
-    houseDetailsLoaded
+    houseDetailsLoaded,
+    charListErrored,
+    bookListErrored,
+    houseListErrored
 }

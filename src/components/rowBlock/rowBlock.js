@@ -1,7 +1,17 @@
 import React from 'react';
 import {Col, Row} from 'reactstrap';
+import Error from '../error';
 
-const RowBlock = ({left, right}) => {
+const RowBlock = ({left, right, itemListError}) => {
+    
+    if (itemListError) {
+        return (
+            <Row>
+                <Error />
+            </Row>
+        )
+    }
+
     return (
         <Row>
             <Col md='6'>

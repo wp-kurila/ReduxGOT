@@ -5,10 +5,11 @@ import './itemList.css';
 class ItemList extends Component {
 
     componentDidMount() {
-        const {getData, page, itemListLoaded} = this.props;
+        const {getData, page, itemListLoaded, itemListErrored} = this.props;
 
         getData(page)
             .then(res => itemListLoaded(res))
+            .catch(itemListErrored)
     }
 
     renderItems(arr) {

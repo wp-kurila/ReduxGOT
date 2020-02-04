@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Col, Row} from 'reactstrap';
 import WithGotService from '../hoc';
-import {charLoaded, charRequested, charErrored} from '../../actions';
+import {charLoaded, charRequested, charErrored, toggleBtn} from '../../actions';
 import Spinner from '../spinner';
 import Error from '../error';
 
@@ -28,22 +29,48 @@ class RandomChar extends Component {
     }
 
     render() {
-        const {char, loading, error} = this.props;
+
+        const {char, loading, error, charVisible, toggleBtn} = this.props;
 
         const spinner = loading ? <Spinner /> : null;
         const errorMessage = error ? <Error /> : null;
         const content = !(loading || error) ? <View char={char} /> : null;
+        const blockContent = charVisible ? <BlockContent errorMessage={errorMessage} spinner={spinner} content={content}/> : null
 
         return (
-            <div className="random-block rounded">
-                {errorMessage}
-                {spinner}
-                {content}
-            </div>
+            <Row>
+                <Col xs={{size: 6, offset: 0}}>
+                    {blockContent}
+                    <Button
+                        toggleBtn={toggleBtn}
+                        charVisible={charVisible}/>
+                </Col>
+            </Row>
         );
     }
 }
 
+const BlockContent = ({errorMessage, spinner, content}) => {
+    return (
+        <div className="random-block rounded">
+            {errorMessage}
+            {spinner}
+            {content}
+        </div>
+    )
+}
+
+const Button = ({charVisible, toggleBtn}) => {
+    const content = charVisible ? `Скрыть персонажа` : `Отобразить персонажа`;
+    return (
+        <button 
+            className='toggleBtn btn btn-primary'
+            onClick={() => toggleBtn()}>
+                {content}
+        </button>
+    )
+}
+ 
 const View = ({char}) => {
     const {name, gender, born, died, culture} = char;
     return (
@@ -71,18 +98,20 @@ const View = ({char}) => {
     )
 }
 
-const mapStateToProps = ({char, loading, error}) => {
+const mapStateToProps = ({char, loading, error, charVisible}) => {
     return {
         char,
         loading,
-        error
+        error,
+        charVisible
     }
 }
 
 const mapDispatchToProps = {
     charLoaded,
     charRequested,
-    charErrored
+    charErrored,
+    toggleBtn
 }
 
 export default WithGotService()(connect(mapStateToProps, mapDispatchToProps)(RandomChar));

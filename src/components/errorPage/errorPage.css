@@ -1,0 +1,18 @@
+.error-block {
+    text-align: center;
+}
+.error-block img {
+    width: 60%;
+}
+
+.error-link {
+    font-size: 34px;
+    text-decoration: underline;
+    color: #fff !important;
+}
+
+.error-text {
+    display: block;
+    font-size: 20px;
+    color: #fff !important;
+}

@@ -1,52 +1,43 @@
 import React from 'react';
-import {Col, Row, Container} from 'reactstrap';
+import {Container} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import {connect} from 'react-redux';
-import {toggleBtn} from '../../actions';
 import {CharacterPage, HousePage, BookPage} from '../pages';
-
+import ErrorPage from '../errorPage';
+import {Switch, Route} from 'react-router-dom';
 
 import './app.css';
 
 
-const App = ({charVisible, toggleBtn}) => {
-
-    const randomChar = charVisible ? <RandomChar /> : null
-    const content = charVisible ? `Скрыть персонажа` : `Отобразить персонажа`
-
+const App = () => {
     return (
-        <> 
+        <div className='app'> 
             <Container>
                 <Header />
             </Container>
             <Container>
-                <Row>
-                    <Col lg={{size: 5, offset: 0}}>
-                        {randomChar}                        
-                        <button 
-                            className='toggleBtn btn btn-primary'
-                            onClick={() => toggleBtn()}>
-                                {content}    
-                        </button>
-                    </Col>
-                </Row>
-                <CharacterPage />
-                <HousePage />
-                <BookPage />
+                <Switch>
+                    <Route
+                        exact
+                        path='/'
+                        component={RandomChar}/>
+                    <Route
+                        path='/characters'
+                        component={CharacterPage} />
+                    <Route
+                        path='/houses'
+                        component={HousePage} />
+                    <Route
+                        path='/books'
+                        exact
+                        component={BookPage} />
+                    <Route
+                        path='*'
+                        component={ErrorPage} />
+                </Switch>
             </Container>
-        </>
+        </div>
     );
 };
 
-const mapStateToProps = ({charVisible}) => {
-    return {
-        charVisible
-    }
-}
-
-const mapDispatchToProps = {
-    toggleBtn
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

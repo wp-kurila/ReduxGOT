@@ -1,6 +1,14 @@
+.app {
+
+    overflow-x: hidden;
+    background: url('./got.jpeg') center center no-repeat;
+    background-size: cover;
+    font-size: 16px;
+    height: 100vh;	
+}
 .row {
     margin-bottom: 40px;
 }
-.row .col-lg-5 {
+.row .col-6 {
     text-align: center;
 }
